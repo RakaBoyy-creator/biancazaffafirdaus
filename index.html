@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Symphony of Seventeen — Bianca Zaffa Firdaus 💖</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #fff0f2;
+      overflow-x: hidden;
+    }
+    .font-luxury {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .font-poetry {
+      font-family: 'Great Vibes', cursive;
+    }
+    
+    .bg-aura-1 {
+      background: radial-gradient(circle inside, rgba(255,182,193,0.4) 0%, rgba(255,240,242,0) 70%);
+    }
+
+    .glass-premium {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(25px) saturate(120%);
+      -webkit-backdrop-filter: blur(25px) saturate(120%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    .glass-dark-modal {
+      background: rgba(255, 243, 245, 0.85);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .reveal-item {
+      opacity: 0;
+      filter: blur(12px) brightness(0.9);
+      transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-slide-left { transform: translateX(-70px); }
+    .reveal-slide-right { transform: translateX(70px); }
+    .reveal-slide-up { transform: translateY(60px); }
+    .reveal-scale-up { transform: scale(0.92); }
+    
+    .reveal-item.visible {
+      opacity: 1;
+      filter: blur(0px) brightness(1);
+      transform: translate(0) scale(1);
+    }
+
+    #fairy-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 2;
+    }
+
+    .envelope-container {
+      perspective: 1200px;
+    }
+    .envelope-wrapper {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      background-color: #f43f5e;
+      border-radius: 0 0 16px 16px;
+      box-shadow: 0 30px 60px rgba(244,63,94,0.25);
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+    .envelope-wrapper:hover {
+      transform: translateY(-10px);
+    }
+    .envelope-flap {
+      position: absolute;
+      top: 0; left: 0; width: 0; height: 0;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-t: 100px solid #fda4af;
+      transform-origin: top;
+      transition: transform 0.5s ease, z-index 0.3s;
+      z-index: 3;
+    }
+    .envelope-wrapper:hover .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+    .envelope-letter {
+      position: absolute;
+      bottom: 10px; left: 20px;
+      width: 240px; height: 140px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      transition: transform 0.5s ease;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .envelope-wrapper:hover .envelope-letter {
+      transform: translateY(-70px);
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #fff0f2; }
+    ::-webkit-scrollbar-thumb { background: #f43f5e; border-radius: 10px; }
+  </style>
+</head>
+<body class="text-rose-950 selection:bg-rose-200">
+
+  <audio id="romantic-audio" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <canvas id="fairy-canvas"></canvas>
+
+  <button id="music-toggle" onclick="toggleAudioState()" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-white/70 backdrop-blur-md flex items-center justify-center border border-white shadow-lg text-rose-600 hover:scale-110 active:scale-95 transition-all hidden">
+    <i id="music-icon" class="fa-solid fa-music text-sm animate-spin" style="animation-duration: 4s;"></i>
+  </button>
+
+  <div id="gatekeeper-panel" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gradient-to-br from-rose-100 via-pink-50 to-rose-200 transition-all duration-1000">
+    <div class="glass-premium max-w-md w-full p-8 md:p-10 rounded-[3rem] shadow-[0_25px_60px_rgba(244,63,94,0.12)] text-center relative overflow-hidden">
+      <div class="absolute -top-16 -right-16 w-40 h-40 bg-pink-300/30 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-rose-300/30 rounded-full blur-3xl"></div>
+      
+      <p class="font-poetry text-5xl text-rose-500 mb-2">Hello Love...</p>
+      <h2 class="font-luxury text-2xl font-semibold tracking-wider text-rose-900 mb-8 uppercase">A Gift For Someone Special</h2>
+      
+      <div class="relative mb-6">
+        <input type="text" id="keyword-field" placeholder="Masukkan kata kunci..." class="w-full px-6 py-4 rounded-2xl glass-premium border border-white/80 text-center text-rose-800 tracking-wide focus:outline-none focus:ring-2 focus:ring-rose-400 placeholder:text-rose-400/50 font-medium lowercase transition-all">
+        <p id="alert-message" class="text-rose-600 text-xs mt-3 font-semibold hidden flex items-center justify-center gap-1">
+          <i class="fa-solid fa-heart-crack text-[11px]"></i> Salah sayang, coba ingat kata sandi manismu!
+        </p>
+      </div>
+
+      <button onclick="validateAndEnter()" class="w-full py-4 bg-gradient-to-r from-rose-400 via-pink-500 to-rose-500 hover:brightness-105 text-white text-xs font-bold tracking-widest uppercase rounded-2xl shadow-lg transition-all transform hover:scale-[1.01] flex items-center justify-center gap-2">
+        Buka Gerbang Kebahagiaan <i class="fa-solid fa-chevron-right text-[10px]"></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="main-layout" class="hidden opacity-0 transition-opacity duration-1000 relative z-10">
+    
+    <header class="fixed top-0 inset-x-0 py-6 px-8 flex justify-between items-center z-40">
+      <span class="font-luxury tracking-widest text-xs uppercase font-bold text-rose-900/60">BZF &bull; XVII</span>
+      <span class="font-poetry text-3xl font-bold text-rose-500/80">From RakaBoyy</span>
+    </header>
+
+    <section class="min-h-screen flex flex-col items-center justify-center px-4 text-center relative">
+      <div class="absolute inset-0 bg-aura-1 -z-10 pointer-events-none"></div>
+      <div class="space-y-6 max-w-4xl">
+        <span class="reveal-item reveal-slide-up inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-rose-600 border border-rose-200/40 shadow-sm">
+          <i class="fa-solid fa-sparkles text-amber-400"></i> Sweet Seventeen Chapter
+        </span>
+        <h1 class="reveal-item reveal-slide-up font-luxury text-6xl md:text-9xl font-medium tracking-tight text-rose-950 leading-none">
+          Bianca Zaffa<br><span class="font-poetry text-rose-500 font-normal lowercase tracking-normal md:text-9xl block mt-3">Firdaus</span>
+        </h1>
+        <div class="reveal-item reveal-slide-up flex justify-center pt-2" style="transition-delay: 200ms;">
+          <div class="glass-premium px-6 py-2 rounded-2xl border border-white/90 shadow-md text-xs font-semibold tracking-widest uppercase text-rose-800/80 flex items-center gap-2">
+            🔒 Status: Hak Milik RakaBoyy Sepenuhnya
+          </div>
+        </div>
+      </div>
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-rose-400 opacity-70 animate-bounce">
+        <span class="text-[10px] uppercase font-bold tracking-widest">Gulir ke bawah</span>
+        <i class="fa-solid fa-chevron-down text-xs"></i>
+      </div>
+    </section>
+
+    <section class="py-32 px-6 max-w-3xl mx-auto text-center relative">
+      <div class="reveal-item reveal-slide-up space-y-8">
+        <span class="font-luxury italic text-rose-400 text-6xl block">“</span>
+        <p class="font-luxury text-3xl md:text-4xl leading-relaxed text-rose-900 font-light italic">
+          "Di usiamu yang ke-17 ini, semesta seolah ikut tersenyum menyaksikan mekarnya jiwa paling indah yang pernah aku kenal."
+        </p>
+        <p class="text-sm md:text-base leading-loose text-rose-800/70 font-light max-w-xl mx-auto">
+          Selamat ulang tahun, Sayang. Tujuh belas tahun adalah gerbang kedewasaan yang penuh warna. Terima kasih telah mengizinkan RakaBoyy menjadi bagian dari ceritamu, merayakan tawamu, dan menemanimu melewati setiap detak waktu. Kamu berharga, melebihi apa pun yang bisa diukir kata-kata.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-24 px-4 overflow-hidden max-w-5xl mx-auto space-y-36">
+      
+      <div class="reveal-item reveal-slide-left flex flex-col md:flex-row items-center gap-12 md:gap-20">
+        <div class="w-full md:w-1/2 relative group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-rose-300 to-pink-200 rounded-[2.5rem] rotate-2 opacity-40 group-hover:rotate-4 transition-transform duration-500"></div>
+          <img src="foto_bianca_senyum_manis.jpg" alt="Bianca Tersenyum" class="w-full h-auto rounded-[2.5rem] shadow-xl border-4 border-white object-cover aspect-[4/5] relative z-10" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+        </div>
+        <div class="w-full md:w-1/2 space-y-4 text-center md:text-left">
+          <span class="font-luxury italic text-rose-400 text-xl font-semibold">01 / Serenade</span>
+          <h3 class="font-luxury text-3xl font-semibold text-rose-950">Tatapan yang Menenangkan</h3>
+          <p class="text-rose-800/70 leading-relaxed font-light text-sm">
+            Setiap kali aku memandang matamu, aku seperti menemukan rumah tempat hatiku ingin pulang dan menetap. Kebahagiaan paling sederhana bagiku adalah melihatmu tersenyum lepas tanpa beban.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal-item reveal-slide-right flex flex-col md:flex-row-reverse items-center gap-12 md:gap-20">
+        <div class="w-full md:w-1/2 relative group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-pink-300 to-rose-200 rounded-[2.5rem] -rotate-2 opacity-40 group-hover:-rotate-4 transition-transform duration-500"></div>
+          <img src="foto_bianca_anggun_aesthetic.jpg" alt="Bianca Anggun" class="w-full h-auto rounded-[2.5rem] shadow-xl border-4 border-white object-cover aspect-[4/5] relative z-10" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80'">
+        </div>
+        <div class="w-full md:w-1/2 space-y-4 text-center md:text-right">
+          <span class="font-luxury italic text-rose-400 text-xl font-semibold">02 / Radiance</span>
+          <h3 class="font-luxury text-3xl font-semibold text-rose-950">Pesona Anggunmu</h3>
+          <p class="text-rose-800/70 leading-relaxed font-light text-sm">
+            Kamu tidak perlu berpura-pura menjadi orang lain untuk terlihat mengagumkan. Kesederhanaanmu, ketulusanmu, dan caramu menyayangi adalah keindahan paling murni yang selalu membuatku bersyukur.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal-item reveal-slide-left flex flex-col md:flex-row items-center gap-12 md:gap-20">
+        <div class="w-full md:w-1/2 relative group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-rose-300 to-pink-200 rounded-[2.5rem] rotate-3 opacity-40 group-hover:rotate-6 transition-transform duration-500"></div>
+          <img src="foto_bianca_imut_lucu.jpg" alt="Bianca Lucu" class="w-full h-auto rounded-[2.5rem] shadow-xl border-4 border-white object-cover aspect-[4/5] relative z-10" onerror="this.src='https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80'">
+        </div>
+        <div class="w-full md:w-1/2 space-y-4 text-center md:text-left">
+          <span class="font-luxury italic text-rose-400 text-xl font-semibold">03 / Eternity</span>
+          <h3 class="font-luxury text-3xl font-semibold text-rose-950">Momen yang Abadi</h3>
+          <p class="text-rose-800/70 leading-relaxed font-light text-sm">
+            Waktu terus berputar, usia bertambah, dunia bisa berubah kapan saja. Namun satu hal yang ingin aku pastikan: perasaanku padamu akan tetap utuh, tumbuh subur, menjaga hatimu di setiap musim hidup kita.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal-item reveal-slide-right flex flex-col md:flex-row-reverse items-center gap-12 md:gap-20">
+        <div class="w-full md:w-1/2 relative group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-pink-300 to-rose-200 rounded-[2.5rem] -rotate-3 opacity-40 group-hover:-rotate-5 transition-transform duration-500"></div>
+          <img src="foto_bersama_raka_dan_bianca.jpg" alt="Raka dan Bianca" class="w-full h-auto rounded-[2.5rem] shadow-xl border-4 border-white object-cover aspect-[4/5] relative z-10" onerror="this.src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80'">
+        </div>
+        <div class="w-full md:w-1/2 space-y-4 text-center md:text-right">
+          <span class="font-luxury italic text-rose-400 text-xl font-semibold">04 / Devotion</span>
+          <h3 class="font-luxury text-3xl font-semibold text-rose-950">Langkah Bersama</h3>
+          <p class="text-rose-800/70 leading-relaxed font-light text-sm">
+            Menuju kedewasaan adalah petualangan baru yang luar biasa. Jangan pernah merasa cemas atau takut, karena genggaman tangan RakaBoyy tidak akan pernah melepaskanmu di setiap jengkal jalannya.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="py-24 px-4 bg-white/30 backdrop-blur-sm border-y border-rose-200/30">
+      <div class="max-w-5xl mx-auto space-y-12">
+        <div class="text-center max-w-md mx-auto space-y-2">
+          <h2 class="font-luxury text-4xl font-bold text-rose-950">Glimpses of You</h2>
+          <p class="text-xs text-rose-800/60 font-medium tracking-widest uppercase">Koleksi Senyum & Kecantikan Bianca</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-start">
+          <div class="reveal-item reveal-scale-up space-y-3">
+            <img src="foto_grid_bianca_1.jpg" class="w-full h-auto rounded-3xl border-4 border-white shadow-md object-cover aspect-square" onerror="this.src='https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=400&q=80'">
+            <p class="text-center text-xs italic font-medium text-rose-700/70">Sinar pagiku ✨</p>
+          </div>
+          <div class="reveal-item reveal-scale-up space-y-3 sm:translate-y-8" style="transition-delay: 100ms;">
+            <img src="foto_grid_bianca_2.jpg" class="w-full h-auto rounded-3xl border-4 border-white shadow-md object-cover aspect-[3/4]" onerror="this.src='https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?auto=format&fit=crop&w=400&q=80'">
+            <p class="text-center text-xs italic font-medium text-rose-700/70">Cantik tak bersyarat 🌸</p>
+          </div>
+          <div class="reveal-item reveal-scale-up space-y-3" style="transition-delay: 200ms;">
+            <img src="foto_grid_bianca_3.jpg" class="w-full h-auto rounded-3xl border-4 border-white shadow-md object-cover aspect-[3/4]" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'">
+            <p class="text-center text-xs italic font-medium text-rose-700/70">Selalu mengagumkan 🧸</p>
+          </div>
+          <div class="reveal-item reveal-scale-up space-y-3 sm:translate-y-8" style="transition-delay: 300ms;">
+            <img src="foto_grid_bianca_4.jpg" class="w-full h-auto rounded-3xl border-4 border-white shadow-md object-cover aspect-square" onerror="this.src='https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=400&q=80'">
+            <p class="text-center text-xs italic font-medium text-rose-700/70">Milik Raka selamanya ❤️</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-36 flex flex-col items-center justify-center text-center px-4">
+      <div class="reveal-item reveal-slide-up max-w-lg space-y-4 mb-16">
+        <h2 class="font-luxury text-4xl font-bold text-rose-950">Halaman Terakhir</h2>
+        <p class="text-xs md:text-sm text-rose-800/60 leading-relaxed font-light">
+          Sentuh surat di bawah ini. Ada pesan rahasia, sekuntum bunga maya, dan sejuta ketulusan yang ingin aku sampaikan langsung ke kedalaman jiwamu.
+        </p>
+      </div>
+
+      <div class="reveal-item reveal-slide-up envelope-container flex justify-center" onclick="openSecretModal()">
+        <div class="envelope-wrapper">
+          <div class="envelope-flap"></div>
+          <div class="envelope-letter">
+            <i class="fa-solid fa-heart text-3xl text-rose-500 animate-pulse"></i>
+            <span class="text-[9px] font-bold tracking-widest text-rose-900 mt-2 uppercase">Open Your Heart</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-12 text-center border-t border-rose-200/30 text-[10px] tracking-widest uppercase text-rose-800/40 font-bold">
+      Designed with full devotion &bull; Special project for Bianca &bull; 2026
+    </footer>
+
+  </div>
+
+  <div id="love-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-rose-950/40 backdrop-blur-md opacity-0 transition-all duration-700">
+    <div id="modal-body" class="glass-dark-modal w-full max-w-xl rounded-[3.5rem] p-8 md:p-12 shadow-2xl relative transform scale-90 transition-all duration-700 max-h-[85vh] overflow-y-auto">
+      
+      <button onclick="closeSecretModal()" class="absolute top-6 right-8 text-rose-900/40 hover:text-rose-600 text-2xl transition-colors">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <div class="flex justify-center gap-2 text-xl mb-4 text-rose-500">
+        <span>💐</span><span>🌹</span><span>✨</span><span>🌸</span><span>🌻</span>
+      </div>
+      
+      <div class="w-40 h-40 mx-auto rounded-full border-4 border-white shadow-xl overflow-hidden mb-6 relative group">
+        <img src="foto_utama_dalam_surat_cinta.jpg" alt="Foto Terbaik Bianca" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.src='https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=300&q=80'">
+      </div>
+      
+      <h2 class="font-luxury text-3xl font-bold text-rose-950 mb-1">Selamat Ulang Tahun, Cantikku</h2>
+      <p class="font-poetry text-3xl text-rose-500 mb-6">Bianca Zaffa Firdaus</p>
+      
+      <div class="text-xs md:text-sm text-rose-950/80 leading-relaxed text-justify space-y-4 font-light px-2 md:px-6">
+        <p>
+          Hari ini, tepat di umurmu yang ke-17, dunia melahirkan seorang wanita yang luar biasa anggun. Fase manis *Sweet Seventeen* ini bukan sekadar pergantian angka, melainkan simbol bahwa kamu siap melangkah ke gerbang petualangan hidup yang lebih indah dan matang.
+        </p>
+        <p>
+          Aku ingin kamu tahu, memiliki kamu di dalam hidupku adalah salah satu takdir paling membahagiakan yang pernah Tuhan berikan untukku. Terima kasih telah menjadi sosok yang penyabar, penuh kasih, dan selalu mewarnai hari-hariku dengan ketulusanmu.
+        </p>
+        <p>
+          Semoga di usia barumu ini, kebahagiaan sejati selalu memeluk jiwamu, impianmu dimudahkan jalan pencapaiannya, dan senyum indahmu tidak pernah pudar oleh tantangan apa pun. Ingat ya sayang, di barisan terdepan pendukungmu, akan selalu ada RakaBoyy yang menjagamu dan menyayangimu di setiap helai napas waktu. *I love you infinitely, today and forever.* 💖
+        </p>
+      </div>
+      
+      <div class="mt-8 pt-6 border-t border-rose-300/30 flex flex-col items-center">
+        <p class="text-[9px] uppercase font-bold tracking-widest text-rose-400 mb-1">With Endless Attachment,</p>
+        <p class="font-poetry text-4xl text-rose-600 font-bold">RakaBoyy</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+    function validateAndEnter() {
+      const inputVal = document.getElementById('keyword-field').value.toLowerCase().trim();
+      const errAlert = document.getElementById('alert-message');
+      const gateScreen = document.getElementById('gatekeeper-panel');
+      const coreLayout = document.getElementById('main-layout');
+      const audioTrack = document.getElementById('romantic-audio');
+      const controlBtn = document.getElementById('music-toggle');
+
+      if (inputVal === 'lopyuu') {
+        gateScreen.classList.add('opacity-0', 'scale-105', 'pointer-events-none');
+        
+        setTimeout(() => {
+          gateScreen.classList.add('hidden');
+          coreLayout.classList.remove('hidden');
+          controlBtn.classList.remove('hidden');
+          
+          setTimeout(() => {
+            coreLayout.classList.remove('opacity-0');
+            startIntersectionObserver();
+            initFairyDustEngine();
+          }, 50);
+          
+          audioTrack.play().catch(err => console.log("Audio play deferred."));
+        }, 1000);
+      } else {
+        errAlert.classList.remove('hidden');
+        document.getElementById('keyword-field').classList.add('border-rose-400', 'bg-rose-50/40');
+      }
+    }
+
+    document.getElementById('keyword-field').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') validateAndEnter();
+    });
+
+    function toggleAudioState() {
+      const player = document.getElementById('romantic-audio');
+      const icon = document.getElementById('music-icon');
+      if (player.paused) {
+        player.play();
+        icon.classList.add('animate-spin');
+      } else {
+        player.pause();
+        icon.classList.remove('animate-spin');
+      }
+    }
+
+    function startIntersectionObserver() {
+      const itemsToReveal = document.querySelectorAll('.reveal-item');
+      const fluidObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -40px 0px"
+      });
+      itemsToReveal.forEach(el => fluidObserver.observe(el));
+    }
+
+    const popupModal = document.getElementById('love-modal');
+    const modalCore = document.getElementById('modal-body');
+
+    function openSecretModal() {
+      popupModal.classList.remove('hidden');
+      setTimeout(() => {
+        popupModal.classList.remove('opacity-0');
+        modalCore.classList.remove('scale-90');
+        modalCore.classList.add('scale-100');
+      }, 20);
+    }
+
+    function closeSecretModal() {
+      modalCore.classList.remove('scale-100');
+      modalCore.classList.add('scale-90');
+      popupModal.classList.add('opacity-0');
+      setTimeout(() => {
+        popupModal.classList.add('hidden');
+      }, 700);
+    }
+
+    function initFairyDustEngine() {
+      const canvas = document.getElementById('fairy-canvas');
+      const ctx = canvas.getContext('2d');
+      let elements = [];
+      const symbols = ['❤', '🌸', '✨', '•'];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      class DustParticle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = canvas.height + Math.random() * 100;
+          this.char = symbols[Math.floor(Math.random() * symbols.length)];
+          this.size = Math.random() * 14 + 8;
+          this.speedY = Math.random() * 0.7 + 0.4;
+          this.speedX = Math.sin(Math.random() * 2) * 0.3;
+          this.opacity = Math.random() * 0.5 + 0.2;
+        }
+        update() {
+          this.y -= this.speedY;
+          this.x += this.speedX;
+          if (this.y < -20) {
+            this.y = canvas.height + 20;
+            this.x = Math.random() * canvas.width;
+          }
+        }
+        draw() {
+          ctx.fillStyle = `rgba(244, 63, 94, ${this.opacity})`;
+          ctx.font = `${this.size}px Arial`;
+          ctx.fillText(this.char, this.x, this.y);
+        }
+      }
+
+      for (let i = 0; i < 45; i++) elements.push(new DustParticle());
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        elements.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  </script>
+</body>
+</html>
